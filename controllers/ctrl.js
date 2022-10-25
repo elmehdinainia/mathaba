@@ -1,29 +1,26 @@
-
+const mongoose = require('mongoose')
 const User = require('../models/User') 
 const bcrypt = require('bcryptjs')
 const env = require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const ls = require('local-storage')
-// const vervtok=require('../verification')
 const sendCofirmationEmail = require('../nodemailer')
 
-const register= async function(req,res){
-
-    //chexk if user is already registered
+const register = async function(req,res){
+    const {body} = req
     const emailExist = await User.findOne({email:req.body.email})
     if(emailExist){
         return res.status(400).send('Email.aleady exists')
     }
-    //HASH THE PASSWORD
     const slat = await  bcrypt.genSalt(10)
     const hashedpassword = await bcrypt.hash(req.body.password,slat)
 
-    //CREATEA NEW USER
     const user = new User({
-    name:req.body.name,
-    email:req.body.email,
+    ...body,
+    // name:req.body.name,
+    // email:req.body.email,
     password:  hashedpassword,
-    role:req.body.role,
+    // role:req.body.role,
     verify: false
     })
 
@@ -43,7 +40,6 @@ const login= async function(req,res){
     if(user && user.verify){
         const validpass = await bcrypt.compare(req.body.password, user.password)
         if(validpass){
-         
             const token = jwt.sign({user},process.env.SECRET)
             // res.send(token)
             ls('token',token)
