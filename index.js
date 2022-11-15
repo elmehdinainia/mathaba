@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 // const dotenv = require('dotenv')
 const mongosse =require('mongoose')
@@ -9,7 +10,8 @@ const port = process.env.PORT
 
 
 
-
+// liaison entre le backend et le frontend 
+app.use(cors());
 //import Routes
 const route = require('./routes/auth.js')
 

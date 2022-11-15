@@ -1,10 +1,12 @@
-const mongosse = require('mongoose')
-const mgdb =mongosse.connect('mongodb+srv://jwtmehdi:jwt1213@mehdijwt.2kgjpcc.mongodb.net/?retryWrites=true&w=majority')
+
+const mongoose = require('mongoose')
+const dotenv = require('dotenv').config()
+mgdb = mongoose.connect(process.env.conexionmg)
 .then(()=>{
     console.log('connexuin')
 })
 .catch(()=>{
-    console.log('error')
+    console.log('aucun connexion')
 })
 
 module.exports ={mgdb}

@@ -1,18 +1,20 @@
 const routes = require('express').Router()
-const modelt =require('../controllers/ctrl')
+const controller =require('../controllers/ctrl')
 const vertoke=require('../verification')
 
 
 
 
-routes.post('/register',modelt.register)
-
-
-routes.post('/update_password',modelt.update_password)
+routes.post('/register',controller.register)
 
 
 
-routes.post('/login',modelt.login)
+// routes.get('/update_password/:token',modelt.update_password)
+routes.post('/update_password/:token',controller.update_password)
+
+
+
+routes.post('/login',controller.login)
 
 routes.get('/client',vertoke.verifiertoken(['client']),(req,res)=>{
     res.send("hello admin")
@@ -26,9 +28,9 @@ routes.get('/client',vertoke.verifiertoken(['livreur']),(req,res)=>{
     res.send("hello livreur")
 
 })
+routes.post('/forgetpassword',controller.forgetpasword)
 
-
-routes.get('/test/:token',modelt.test)
+routes.get('/verificationemail/:token',controller.verificationemail)
 
 
 

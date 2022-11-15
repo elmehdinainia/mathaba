@@ -22,7 +22,8 @@ userSchema = new mongoose.Schema({
     role: {
         type : String, 
         required:true,
-        max:255
+        max:255,
+        default: 'client'
     },
     verify: {
         type : Boolean,
